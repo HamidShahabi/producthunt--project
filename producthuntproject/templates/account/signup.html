@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Sign up Template</title>
+        <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
+    </head>
+    <body>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 login-section-wrapper">
+                    <div class="brand-wrapper">
+                        <img src="{% static 'assets/images/logo.svg' %}" alt="logo" class="logo">
+                    </div>
+                    <div class="login-wrapper my-auto">
+                                {% if error %}
+                                    {{ error }}
+                                    <br/>
+                                    <br/>
+                                {% endif %}
+                        <h1 class="login-title">Sign up</h1>
+                        <form method="POST" action="{% url 'account:signup' %}">
+                            <div class="form-group">
+                                {% csrf_token %}
+                                <label for="email">Username</label>
+                                <input type="username" name="username" id="username" class="form-control"
+                                       placeholder="Username">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="password">Password</label>
+                                <input type="password" name="password1" id="password1" class="form-control"
+                                       placeholder="Enter your password">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="password">Re-enter Password</label>
+                                <input type="password" name="password2" id="password2" class="form-control"
+                                       placeholder="Re-enter your password">
+                            </div>
+                            <input name="signup" id="signup" class="btn btn-block login-btn" type="submit"
+                                   value="Sign up">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-6 px-0 d-none d-sm-block">
+                    <img src="{% static 'assets/images/login.jpg' %}" alt="login image" class="login-img">
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    </body>
+    </html>
+{% endblock %}
