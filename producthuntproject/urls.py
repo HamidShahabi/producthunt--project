@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('account/', include('account.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from product import views
@@ -22,5 +24,5 @@ urlpatterns = [
     path('',views.home,name='home'),
     path('account/', include(('account.urls', 'account'), 'account'), name='account'),
     path('product/', include(('product.urls', 'product'), 'product'), name='product'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-]
