@@ -20,9 +20,9 @@ from django.urls import path, include
 from product import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',views.home,name='home'),
-    path('account/', include(('account.urls', 'account'), 'account'), name='account'),
-    path('product/', include(('product.urls', 'product'), 'product'), name='product'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+                path('admin/', admin.site.urls),
+                path('', views.home, name='home'),
+                path('account/', include(('account.urls', 'account'), 'account'), name='account'),
+                path('product/', include(('product.urls', 'product'), 'product'), name='product'),
+                path('accounts/', include('django.contrib.auth.urls')),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

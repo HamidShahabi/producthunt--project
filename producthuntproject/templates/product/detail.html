@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <div class="container">
-        <div class="row">
+        <div class="row pt-3">
             <div class="col-2">
                 <img src="{{ product.icon.url }}" class="img-fluid">
             </div>
@@ -14,7 +14,7 @@
                 </a>
             </div>
         </div>
-        <div class="row">
+        <div class="row pt-3">
             <div class="col-8">
                 <img src="{{ product.image.url }}" class="image-fluid" width="700px">
             </div>
@@ -26,7 +26,7 @@
                 </a>
             </div>
         </div>
-        <div class="row">
+        <div class="row pt-3">
             <div class="col-4">
                 <h4>Hunted by {{ product.hunter.username }}</h4>
             </div>
@@ -34,20 +34,17 @@
                 <h4>Hunted on {{ product.pub_date_pretty }}</h4>
             </div>
         </div>
-        <div class="row">
+        <div class="row pt-3">
             <div class="col-8">
                 <p>{{ product.body }}</p>
             </div>
         </div>
-        {% if user.is_authenticated %}
         <form method="POST" id="upvote" action="{% url 'product:upvote' product.id %}" >
             {% csrf_token %}
             <input type="hidden">
-        {% else %}
             <form method="GET" id="upvote" action="{% url 'account:login' %}">
                 <input type="hidden">
             </form>
-        {% endif %}
         </form>
 
     </div>
