@@ -1,11 +1,16 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from product.models import Product
 
 
 def home(request):
-    products = Product.objects
+    products_list = Product.objects.all().order_by('title')
+    paginator = Paginator(products_list, 1)
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+    print(page_number)
     return render(request, 'product/home.html', {'products': products})
 
 
