@@ -23,9 +23,10 @@
                         <img src="{% static 'assets/images/logo.svg' %}" alt="logo" class="logo">
                     </div>
                     {% if error %}
-                        {{ error }}
-                        <br/>
-                        <br/>
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+
                     {% endif %}
                     <div class="login-wrapper my-auto">
                         <h1 class="login-title">Log in</h1>

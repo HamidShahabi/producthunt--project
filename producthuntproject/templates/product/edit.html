@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
@@ -8,7 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Sign up Template</title>
+        <title>Login Template</title>
         <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -16,48 +14,49 @@
     </head>
     <body>
     <main>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6 login-section-wrapper">
                     <div class="brand-wrapper">
                         <img src="{% static 'assets/images/logo.svg' %}" alt="logo" class="logo">
                     </div>
+                    {% if error %}
+                        {{ error }}
+                        <br/>
+                        <br/>
+                    {% endif %}
                     <div class="login-wrapper my-auto">
-                        {% if error %}
-                           <div class="alert alert-danger" role="alert">
-                            {{ error }}
-                           </div>
-
-                        {% endif %}
-                        <h1 class="login-title">Sign up</h1>
-                        <form method="POST" action="{% url 'account:signup' %}">
+                        <h1 class="login-title">Edit Product</h1>
+                        <form method="POST" action="{% url 'product:edit' product.id %}" enctype="multipart/form-data">
+                            {% csrf_token %}
                             <div class="form-group">
-                                {% csrf_token %}
-                                <label for="username">Username</label>
-                                <input type="username" name="username" id="username" class="form-control"
-                                       placeholder="Username">
+                                <label for="title">Title</label>
+                                <input type="text" name="title" id="title" class="form-control"
+                                       value="{{ product.title }}">
                             </div>
                             <div class="form-group mb-4">
-                                <label for="email">Email</label>
-                                <input type="email" name="email" id="email" class="form-control"
-                                       placeholder="Enter your Email">
+                                <label for="body">Body</label>
+                                <textarea rows="5" cols="40" name="body">{{ product.body }}</textarea>
                             </div>
                             <div class="form-group mb-4">
-                                <label for="password">Password</label>
-                                <input type="password" name="password1" id="password1" class="form-control"
-                                       placeholder="Enter your password">
+                                <label for="url">Url</label>
+                                <input type="text" name="url" id="url" class="form-control"
+                                       placeholder="URL" value="{{ product.url }}">
                             </div>
                             <div class="form-group mb-4">
-                                <label for="password">Re-enter Password</label>
-                                <input type="password" name="password2" id="password2" class="form-control"
-                                       placeholder="Re-enter your password">
+                                <label for="image">Image</label>
+                                <img src="{{ product.image.url }}" class="img-fluid">
+                                <input type="file" name="image" id="image" class="form-control">
                             </div>
-                            <input name="signup" id="signup" class="btn btn-block login-btn" type="submit"
-                                   value="Sign up">
+                            <div class="form-group mb-4">
+                                <label for="icon">Icon</label>
+                                <img src="{{ product.icon.url }}" class="img-fluid">
+                                <input type="file" name="icon" id="icon" class="form-control">
+                            </div>
+
+                            <input name="login" id="login" class="btn btn-block btn-success" type="submit" value="Save">
                         </form>
-                     <p class="login-wrapper-footer-text">Already have an account? <br><a
-                                href="{% url 'account:login' %}" class="text-reset"><p style="color:#fdbb28">Sign in
-                        here</p></a></p>
+
                     </div>
                 </div>
                 <div class="col-sm-6 px-0 d-none d-sm-block">
@@ -71,4 +70,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     </body>
     </html>
+
 {% endblock %}

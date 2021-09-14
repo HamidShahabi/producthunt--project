@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% for product in products.all %}
+    <div class="container">
+        <div class="row  pt-3" onclick="window.location='{% url 'product:detail' product.id %}'" style="cursor: pointer">
+            <div class="col-2">
+                <img src="{{ product.icon.url }}" class="img-fluid">
+            </div>
+            <div class="col-6">
+                <h1>
+                    {{ product.title }}
+                </h1>
+                <p>
+                    {{ product.summary }}
+                </p>
+            </div>
+            <div class="col-2">
+                <a href="javascript:document.getElementById('upvote{{ product.id }}').submit()">
+                    <button class="btn btn-primary btn-sm btn-block">
+                        Upvote <span class="oi oi-caret-top"></span>  {{ product.votes_total }}
+                    </button>
+                </a>
+            </div>
+            <div class="col-2">
+                <a href="javascript:document.getElementById('delete{{ product.id }}').submit()">
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </a>
+                <a href="javascript:document.getElementById('edit{{ product.id }}').submit()">
+                    <button class="btn btn-info btn-sm">Edit</button>
+                </a>
+
+
+            </div>
+
+        </div>
+    </div>
+    <form id="upvote{{ product.id }}" method="POST" action="{% url 'product:upvote' product.id %}">
+        {% csrf_token %}
+        <input type="hidden">
+    </form>
+    <form id="edit{{ product.id }}" method="GET" action="{% url 'product:edit' product.id %}">
+        {% csrf_token %}
+        <input type="hidden">
+    </form>
+
+    <form id="delete{{ product.id }}" method="POST" action="{% url 'product:delete' product.id %}">
+        {% csrf_token %}
+        <input type="hidden">
+    </form>
+{% endfor %}
+
+{% if products.has_other_pages %}
+  <ul class="pagination pt-3">
+    {% if products.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}"> Previous </a></li>
+    {% endif %}
+    {% for i in products.paginator.page_range %}
+      {% if products.number == i %}
+        <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if products.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endblock %}
