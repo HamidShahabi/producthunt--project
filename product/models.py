@@ -11,7 +11,8 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images/')
     icon = models.ImageField(upload_to='images/')
     votes_total = models.IntegerField()
-    hunter = models.ForeignKey(User, on_delete=models.CASCADE)
+    hunter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='hunter')
+    users = models.ManyToManyField(User, 'user')
 
     def __str__(self):
         return self.title

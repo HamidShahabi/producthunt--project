@@ -49,7 +49,11 @@ def detail(request, product_id):
 def upvote(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Product, pk=product_id)
-        product.votes_total += 1
+        if request.user in product.users.all():
+            product.users.remove(request.user)
+        else:
+            product.users.add(request.user)
+        product.votes_total = product.users.count()
         product.save()
         return redirect('/product/' + str(product.id))
 
